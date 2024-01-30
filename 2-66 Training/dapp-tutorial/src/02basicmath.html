@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- script -->
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+    <script src="./node_modules/bignumber.js/bignumber.js"></script>
+    <script src="./node_modules/@truffle/contract/browser-dist/truffle-contract.min.js"></script>
+    <script src="./js/02basicmath.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1>Basic Math DApp</h1>
+        <!-- สร้างการ์ดสำหรับการบวกลบคูณหาร -->
+        <div class="card">
+            <div class="card-body">
+                <!-- สร้าง row และ column สำหรับการบวกลบคูณหาร -->
+                <div class="row mb-3">
+                    <div class="col">
+                        <input type="number" class="form-control" id="add_param1" placeholder="Operand #1">
+                    </div>
+                    <div class="col">
+                        <input type="number" class="form-control" id="add_param2" placeholder="Operand #2">
+                    </div>
+                    <div class="col">
+                        <button id="add" type="button" class="btn btn-success">Add</button>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <input type="number" class="form-control" id="add_param1" placeholder="Operand #1">
+                    </div>
+                    <div class="col">
+                        <input type="number" class="form-control" id="add_param2" placeholder="Operand #2">
+                    </div>
+                    <div class="col">
+                        <button id="add" type="button" class="btn btn-success">Subtract</button>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <input type="number" class="form-control" id="add_param1" placeholder="Operand #1">
+                    </div>
+                    <div class="col">
+                        <input type="number" class="form-control" id="add_param2" placeholder="Operand #2">
+                    </div>
+                    <div class="col">
+                        <button id="add" type="button" class="btn btn-success">Multiply</button>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <input type="number" class="form-control" id="add_param1" placeholder="Operand #1">
+                    </div>
+                    <div class="col">
+                        <input type="number" class="form-control" id="add_param2" placeholder="Operand #2">
+                    </div>
+                    <div class="col">
+                        <button id="add" type="button" class="btn btn-success">Divide</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
