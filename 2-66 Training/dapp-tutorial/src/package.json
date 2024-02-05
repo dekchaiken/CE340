@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "dev": "lite-server"
+    "dev": "lite-server",
+    "gn": "ganache-cli -s 123 -p 9545"
   },
   "dependencies": {
     "@truffle/contract": "^4.6.31",
