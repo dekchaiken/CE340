@@ -14,4 +14,10 @@ contract BasicMath {
   function divide(uint x, uint y) pure public returns (uint) {
     return x / y;
   }
+  function sum(uint x, uint y, uint z) pure public returns (uint) {
+    return 0;
+  }
+  function average(uint x, uint y, uint z) pure public returns (uint) {
+    return 0;
+  }
 }

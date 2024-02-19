@@ -1,29 +1,50 @@
-// const WEB3_URL = "http://127.0.0.1:9545";   //Truffle Develop
-const WEB3_URL = "ws://127.0.0.1:9545";   //Ganache Standalone Emulator
-let web3, accounts; // ตัวแปรสำหรับเก็บ Web3 และ Account
+// const WEB3_URL = "http://127.0.0.1:9545/"
+const WEB3_URL = "ws://127.0.0.1:9545/"
+let web3, accounts;
+const userWallet = false;
+let balances = [];
 
-async function getAccount() {
-    if(!window.ethereum && typeof WEB3_URL != 'undefined'){  //  Check against emulated
+
+// Get Accounts จาก Emulator ที่กำลังทำงานอยู่
+async function getAccounts() {
+    // Check ดูว่ามี window.ethereum หรือไม่
+    if (!window.ethereum || !userWallet) {
         try {
             accounts = await web3.eth.getAccounts();
         } catch (error) {
-            console.error(error);
+            console.log(error);
         }
-        console.log(accounts);
+    } else {
+
     }
+    console.log(accounts);
 }
 
+async function getBalances() {
+    for (const account of accounts) {
+        try {
+           const balance = await web3.eth.getBalance(account);
+           balances.push(web3.utils.fromWei(balance, "ether"));
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    console.log(balances);
+}
 
 async function initWeb3() {
-    if(window.ethereum){ //ถ้ามี Wallet
-        web3 = new Web3 (window.ethereum);
-    }  else{  //ถ้าไม่มี wallet 
-        if(WEB3_URL.startsWith("ws")) //ถ้าเป็น Websocket
-            web3 = new Web3 (new Web3.providers.WebsocketProvider(WEB3_URL));
-        else  //http
-            web3 = new Web3 (new Web3.providers.HttpProvider(WEB3_URL));
+    // Check window.ethereum
+    if (window.ethereum && userWallet) {
+        web3 = new Web3(window.ethereum);
+    } else {
+        // startwith ใช้เช็คว่าเริ่มต้นด้วยอะไร
+        if (WEB3_URL.startsWith("ws")) {
+            web3 = new Web3(new Web3.providers.WebsocketProvider(WEB3_URL));
+        } else {
+            web3 = new Web3(new Web3.providers.HttpProvider(WEB3_URL));
+        }
     }
-    getAccount();
+    // console.log(web3);
+    await getAccounts();
+    await getBalances();
 }
-
-initWeb3(); //เรียกใช้งาน
