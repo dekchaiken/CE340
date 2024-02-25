@@ -110,4 +110,54 @@ function setupButtons() {
             }
         }
     });
+    // attach Sum button
+    $("#sum").click(async e => {
+        console.log(e);
+        const param1 = parseInt($("#add_param1").val());
+        const param2 = parseInt($("#add_param2").val());
+        const param3 = parseInt($("#add_param3").val());
+        if(Number.isNaN(param1)){
+            console.log("Sum: Parameter #1 is NaN");
+        } else if (Number.isNaN(param2)) {
+            console.log("Sum: Parameter #2 is NaN");
+        } else if (Number.isNaN(param3)) {
+            console.log("Sum: Parameter #3 is NaN");
+        } else {
+            try {
+                const result = await bmContract.sum(param1, param2, param3);
+                console.log(param1 + " + " + param2 + " + " + param3 + " = " + result);
+                alert(param1 + " + " + param2 + " + " + param3 + " = " + result);
+                $("#add_param1").val("");
+                $("#add_param2").val("");
+                $("#add_param3").val("");
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    });
+    // attach Average button
+    $("#average").click(async e => {
+        console.log(e);
+        const param1 = parseInt($("#add_param1").val());
+        const param2 = parseInt($("#add_param2").val());
+        const param3 = parseInt($("#add_param3").val());
+        if(Number.isNaN(param1)){
+            console.log("Average: Parameter #1 is NaN");
+        } else if (Number.isNaN(param2)) {
+            console.log("Average: Parameter #2 is NaN");
+        } else if (Number.isNaN(param3)) {
+            console.log("Average: Parameter #3 is NaN");
+        } else {
+            try {
+                const result = await bmContract.average(param1, param2, param3);
+                console.log("Average of " + param1 + ", " + param2 + ", " + param3 + " = " + result);
+                alert("Average of " + param1 + ", " + param2 + ", " + param3 + " = " + result);
+                $("#add_param1").val("");
+                $("#add_param2").val("");
+                $("#add_param3").val("");
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    });
 }

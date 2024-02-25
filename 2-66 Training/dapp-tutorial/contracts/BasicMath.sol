@@ -15,9 +15,9 @@ contract BasicMath {
     return x / y;
   }
   function sum(uint x, uint y, uint z) pure public returns (uint) {
-    return 0;
+    return x + y + z;
   }
   function average(uint x, uint y, uint z) pure public returns (uint) {
-    return 0;
+    return (x + y + z) / 3;
   }
 }
