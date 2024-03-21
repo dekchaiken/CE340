@@ -6,10 +6,10 @@
   "dependencies": {
     "@truffle/contract": "^4.6.31",
     "bignumber.js": "^9.1.2",
-    "bootstrap": "^5.3.2",
+    "bootstrap": "^5.3.3",
+    "ganache-cli": "^6.12.2",
     "jquery": "^3.7.1",
     "lite-server": "^2.6.1",
     "web3": "^1.10.4"
   }
-  
 }

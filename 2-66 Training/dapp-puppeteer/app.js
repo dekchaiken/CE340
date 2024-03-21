@@ -3,7 +3,7 @@ const URL = 'http://localhost:3000';
 const PERIOD = 20000;
 
 const main = async () => {
-    const browser = await puppeteer.launch({
+    const browser = await puppeteer.launch({    // สร้าง browser ขึ้นมา
         headless: false,
         channel: 'chrome',
     });
