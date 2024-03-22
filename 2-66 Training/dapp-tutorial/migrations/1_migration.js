@@ -1,5 +1,6 @@
-var BasicMath = artifacts.require("BasicMath"); // artifacts.require คือการเรียกใช้งาน contract ที่เราสร้าง
+const MyAuction = artifacts.require("MyAuction");
+const product = require('./product.json'); // Assuming product.json exists
 
-module.exports = function(deployer){
-  deployer.deploy(BasicMath);
+module.exports = async function(deployer) {
+  await deployer.deploy(MyAuction, product.Brand, product.SerialNumber, product.Period);
 };
