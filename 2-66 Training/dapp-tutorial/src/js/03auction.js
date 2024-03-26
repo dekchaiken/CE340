@@ -45,12 +45,68 @@ const updateAccounts = async () => {
 
 };
 
+const displayStaticInfo = async () => {
+    owner = accounts[0];
+    $('#AuctionOwner').text(owner);
+    const endTime = await myAuction.auctionEnd.call();
+    $('#AuctionEnd').text(new Date(endTime * 1000));
+    const productInfo = await myAuction.getProductInfo.call();
+    $('#ProductBrand').text(productInfo[0]);
+    $('#SerialNumber').text(productInfo[1]);
+};
+
+const updateInfo = async () => {
+    const highestBidder = await myAuction.highestBidder.call();
+    const highestBid = await myAuction.highestBid.call();
+    const myBidWei = await myAuction.getMyBid(bidder);  // wei
+    const myBid = web3.utils.fromWei(myBidWei);
+    const currentState = await myAuction.STATE.call();
+    $('#HighestBidder').text(highestBidder);
+    $('#HighestBid').text(highestBid);
+    $('#State').text(AUCTION_STATE[currentState]);
+    $('#MyBid').text(myBid + ' Ether');
+};
+
+const bid = async () => {
+    const myBid = $('Value').val();
+    let result;
+    try {
+        result = myAuction.bid({
+            from: bidder,
+            value: web3.utils.toWei(myBid, "Ether")
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+const endAuction = async () => {
+    let result;
+    try {
+        result = myAuction.endAuction({from: owner,});
+    } catch (error) {
+        console.log(error);
+    }
+};
+const cancelAuction = async () => {
+    let result;
+    try {
+        result = myAuction.cancelAuction({from: owner,});
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 $(async () => {
     try {
         await initWeb3();
         await deployContract();
         await getAccounts();
         await updateAccounts();
+        await displayStaticInfo();
+        await updateInfo();
+        $('#Bid').click(bid);
+        $('#End').click(endAuction);
+        $('#Cancel').click(cancelAuction);
     } catch (error) {
         console.log(error);
     }
