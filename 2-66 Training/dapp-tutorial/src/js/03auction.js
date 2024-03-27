@@ -27,8 +27,7 @@ const updateAccounts = async () => {
     for (let i = 0; i < accounts.length; i++) {
         htmlString += `<option value="${i}">${accounts[i]} (${formatBalance(balances[i])} ETH)</option>`;
     }
-    $("#AccountList").html(htmlString);
-
+    $("#AccountList").html(htmlString);  // แสดงข้อมูลใน dropdown
     if (!initialized) { // ถ้าเป็นครั้งแรกที่เข้ามา
         initialized = true;
     } else {
@@ -46,7 +45,8 @@ const updateAccounts = async () => {
 };
 
 const displayStaticInfo = async () => {
-    owner = accounts[0];
+    owner = accounts[0];        // ให้ owner เป็น account ที่ 0
+    bidder = owner;     // ให้ bidder เป็น owner ไว้ก่อน
     $('#AuctionOwner').text(owner);
     const endTime = await myAuction.auctionEnd.call();
     $('#AuctionEnd').text(new Date(endTime * 1000));
@@ -68,14 +68,14 @@ const updateInfo = async () => {
 };
 
 const bid = async () => {
-    const myBid = $('Value').val();
+    const myBid = $('Value').val();  //Ether
     let result;
     try {
         result = myAuction.bid({
             from: bidder,
             value: web3.utils.toWei(myBid, "Ether")
         });
-    } catch (error) {
+    } catch (error) {       // ถ้ามี error ให้แสดง error ออกมา
         console.log(error);
     }
 };
@@ -96,7 +96,39 @@ const cancelAuction = async () => {
     }
 };
 
-$(async () => {
+const updateStatus = async (event, message) => {        // ฟังก์ชันสำหรับอัพเดทสถานะ
+    const dateString = new Date(event.returnValues.timestamp * 1000);  // แปลงเวลาจาก Unix Timestamp เป็น Date
+    $('#EventsLog').append('<li class="lead">' + message + ' at ' + dateString + '</li>');      // แสดงข้อความที่เกิดขึ้น
+    const currentStatus = await myAuction.STATE.call();     // ดึงข้อมูล state ปัจจุบัน
+    $('#State').text(AUCTION_STATE[currentStatus]);  // แสดงข้อมูล state ปัจจุบัน
+};
+
+const eventBinding = async () => {
+    myAuction.BidEvent()
+        .on('data', async e => {
+            await updateStatus(e, 'BID');
+            await updateInfo();
+            await updateAccounts();
+            const highestBidder = e.returnValues.highestBidder;
+            const highestBid = e.returnValues.highestBid;
+            $('EventsLog').append('<li class="lead">' + highestBidder + ' has bid at ' + formatBalance(highestBid) + ' Ether</li>');        // แสดงข้อความว่าใครได้ bid ไปที่เท่าไหร่      
+        })
+        .on('error', async err => console.log(err));
+    myAuction.EndedEvent()
+        .on('data', async e => {
+            await updateStatus(e, 'Auction Ended');     // ถ้ามีการเกิด event EndedEvent ให้ทำการอัพเดทสถานะ
+            const highestBidder = e.returnValues.highestBidder;
+            const highestBid = e.returnValues.highestBid;
+            $('#EventsLog').append('<li class="lead">' + highestBidder + ' has won the auction at ' + formatBalance(highestBid) + ' Ether</li>');       // แสดงข้อความว่าใครได้ bid ไปที่เท่าไหร่
+        })
+        .on('error', async err => console.log(err));
+    myAuction.CancelledEvent()
+        .on('data', async e => 
+            await updateStatus(e, 'Auction Cancelled'))      // ถ้ามีการเกิด event CancelledEvent ให้ทำการอัพเดทสถานะ
+        .on('error', async err => console.log(err));
+};
+
+$(async () => {     // ทำงานเมื่อเว็บโหลดเสร็จ
     try {
         await initWeb3();
         await deployContract();
@@ -104,9 +136,10 @@ $(async () => {
         await updateAccounts();
         await displayStaticInfo();
         await updateInfo();
-        $('#Bid').click(bid);
-        $('#End').click(endAuction);
-        $('#Cancel').click(cancelAuction);
+        await eventBinding();
+        $('#Bid').click(bid);       // ถ้ามีการ click ที่ id Bid ให้ทำงาน function bid
+        $('#End').click(endAuction);        // ถ้ามีการ click ที่ id End ให้ทำงาน function endAuction
+        $('#Cancel').click(cancelAuction);      // ถ้ามีการ click ที่ id Cancel ให้ทำงาน function cancelAuction
     } catch (error) {
         console.log(error);
     }
