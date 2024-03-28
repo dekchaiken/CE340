@@ -190,7 +190,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity >=0.4.22 <0.9.0;\n\nabstract contract Auction { // abstract คือการประกาศให้เป็น Abstract Class หรือ Interface เพื่อให้สามารถเรียกใช้งานได้\n  // Address เจ้าของ\n  address payable public owner;\n\n  // กำหนดค่าสถานะที่เป็นไปได้ในการประมูล\n  enum AuctionState { STARTED, ENDED, CANCELLED, DESTRUCTED }\n\n  struct Product {\n    string Brand;\n    string SerialNumber;\n  }\n\n  // ยื่นประมูล | เสนอราคา พร้อมส่งเงินประมูลมาเก็บไว้\n  function bid() virtual public payable;  // virtual คือการเปิดให้มีการ Override ได้\n  // ถอนเงิน\n  function withdraw() virtual external; // external คือการเรียกใช้งานจากภายนอก\n  // จบการประมูล\n  function endAuction() virtual external;\n  // ยกเลิกการประมูล\n  function cancelAuction() virtual external;\n  // เช็ครายละเอียดสินค้า\n  function getProductInfo() virtual external view returns (string memory, string memory);\n  // เช็คราคาที่เราเสนอ\n  function getMyBid(address bidder) virtual external view returns (uint256);\n  // เช็คราคาที่เสนอสูงสุด\n  function getHighestBid() virtual external view returns (uint256);\n\n  // สร้าง Event สำหรับการประมูล\n  event BidEvent(address bidder, uint256 amount, uint256 timestamp);\n  // แจ้งเตือนเมื่อการประมูลจบลง\n  event EndedEvent(string message, uint256 timestamp);\n  // แจ้งเตือนเมื่อการประมูลถูกยกเลิก\n  event CancelledEvent(string message, uint256 timestamp);\n  // แจ้งเตือนเมื่อมีการถอนเงิน\n  event WithdrawEvent(address bidder, uint256 amount, uint256 timestamp);\n}\n",
-  "sourcePath": "/Users/kennoluv/Desktop/Work/CE340/2-66 Training/dapp-tutorial/contracts/Auction.sol",
+  "sourcePath": "/Users/kennoluv/Documents/GitHub/CE340/2-66 Training/dapp-tutorial/contracts/Auction.sol",
   "ast": {
     "absolutePath": "project:/contracts/Auction.sol",
     "exportedSymbols": {
@@ -1059,7 +1059,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-03-22T05:39:48.462Z",
+  "updatedAt": "2024-03-27T08:04:16.075Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
