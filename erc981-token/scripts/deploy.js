@@ -1,12 +1,13 @@
 const hre = require("hardhat");
 
 async function main() {
-  const ERC981Token = await hre.ethers.getContractFactory("ERC981Token");
-  const erc981Token = await ERC981Token.deploy("My ERC981 Token", "MET");
+  const ERC721PartialOwnership = await hre.ethers.getContractFactory("ERC721PartialOwnership");
+  const erc721PartialOwnership = await ERC721PartialOwnership.deploy("My ERC721 Token", "MET");
 
-  await erc981Token.deployed();
+  await erc721PartialOwnership.deployed();
 
-  console.log("ERC981Token deployed to:", erc981Token.address);
+  console.log("ERC721PartialOwnership deployed to:", erc721PartialOwnership.address);
+
 }
 
 main()

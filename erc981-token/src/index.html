@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ERC-981 Token Ownership Transfer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>ERC-981 Token Ownership Transfer</h1>
+    <button id="connectWallet" class="button">Connect Wallet</button>
+    <div id="transferForm" class="form-container" style="display: none;">
+      <label for="tokenId">Token ID:</label>
+      <input type="text" id="tokenId" placeholder="Enter Token ID">
+      <label for="newOwners">New Owners (comma-separated addresses):</label>
+      <input type="text" id="newOwners" placeholder="Enter new owner addresses">
+      <label for="newShares">New Shares (comma-separated shares, must sum to 100):</label>
+      <input type="text" id="newShares" placeholder="Enter new ownership shares">
+      <button id="transferOwnership" class="button">Transfer Ownership</button>
+    </div>
+    <div id="result" class="result"></div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.7.3/dist/web3.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

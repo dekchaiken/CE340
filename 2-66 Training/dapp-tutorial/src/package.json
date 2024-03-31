@@ -4,6 +4,7 @@
     "gn": "ganache -s 123 -p 9545"
   },
   "dependencies": {
+    "@openzeppelin/contracts": "^5.0.2",
     "@truffle/contract": "^4.6.31",
     "bignumber.js": "^9.1.2",
     "bootstrap": "^5.3.3",
