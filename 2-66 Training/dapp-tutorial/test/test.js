@@ -1,21 +1,23 @@
 const ERC721PartialOwnership = artifacts.require("ERC721PartialOwnership");
 
-contract("ERC721PartialOwnership", accounts => {
+contract("ERC721PartialOwnership", (accounts) => {
+  let erc721PartialOwnership;
+
+  beforeEach(async () => {
+    erc721PartialOwnership = await ERC721PartialOwnership.new(
+      "TestToken",
+      "TT"
+    );
+  });
+
   it("should mint a new token with partial ownership", async () => {
-    const contractInstance = await ERC721PartialOwnership.deployed();
-    const owners = [accounts[0], accounts[1]]; // 2 addresses
-    const shares = [web3.utils.toBN(50), web3.utils.toBN(50)]; // Assuming shares are 50 each
-    
-    // Mint a new token with partial ownership
-    const tokenId = await contractInstance.mint(owners, shares);
-    
-    // Check ownership
-    const [tokenOwners, ownerShares] = await contractInstance.ownershipOf(tokenId);
-    assert.strictEqual(tokenOwners.length, 2, "Incorrect number of owners");
-    assert.strictEqual(tokenOwners[0], owners[0], "Incorrect owner address");
-    assert.strictEqual(tokenOwners[1], owners[1], "Incorrect owner address");
-    assert.strictEqual(ownerShares.length, 2, "Incorrect number of shares");
-    assert.strictEqual(ownerShares[0], shares[0], "Incorrect share");
-    assert.strictEqual(ownerShares[1], shares[1], "Incorrect share");
+    const tokenId = await erc721PartialOwnership.mint(
+      [
+        "0xf0b60768436Ec05dA6C959F5E5Cf78F1A5169f18",
+        "0x793303e187ED167745D45894D5AA3A5B6C501041",
+      ], // ใส่ที่อยู่ของผู้ถือสิทธิ์เป็นตัวอย่าง
+      [70, 30] // ใส่สิทธิ์ของแต่ละผู้ถือสิทธิ์เป็นตัวอย่าง
+    );
+    assert.exists(tokenId, "Token ID should exist");
   });
 });

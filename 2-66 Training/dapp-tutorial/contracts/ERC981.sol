@@ -27,8 +27,9 @@ contract ERC721PartialOwnership is ERC721 {
      * @dev Mints a new ERC721 token and assigns partial ownership.
      * @param owners The addresses of the initial owners.
      * @param shares The shares of ownership for each owner.
+     * @return tokenId The ID of the newly minted token.
      */
-    function mint(address[] memory owners, uint256[] memory shares) public returns (uint256) {
+    function mint(address[] memory owners, uint256[] memory shares) public returns (uint256 tokenId) {
         require(owners.length == shares.length, "Owners and shares arrays must have the same length");
         require(owners.length > 0, "At least one owner is required");
         uint256 totalShares = 0;
@@ -37,12 +38,11 @@ contract ERC721PartialOwnership is ERC721 {
         }
         require(totalShares == 100, "Total shares must be 100");
 
-        uint256 tokenId = _tokenIdCounter.current();
+        tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(msg.sender, tokenId);
         ownershipByToken[tokenId] = Ownership(owners, shares);
         emit Transfer(address(0), msg.sender, tokenId);
-        return tokenId;
     }
 
     /**
@@ -67,6 +67,7 @@ contract ERC721PartialOwnership is ERC721 {
         address[] memory newOwners,
         uint256[] memory newShares
     ) public {
+        require(ownerOf(tokenId) == msg.sender, "Only the token owner can transfer ownership");
         require(ownershipByToken[tokenId].owners.length > 0, "Token does not exist");
         require(newOwners.length == newShares.length, "Owners and shares arrays must have the same length");
         require(newOwners.length > 0, "At least one new owner is required");
@@ -79,6 +80,6 @@ contract ERC721PartialOwnership is ERC721 {
         Ownership storage ownership = ownershipByToken[tokenId];
         ownership.owners = newOwners;
         ownership.shares = newShares;
-        emit Transfer(msg.sender, address(0), tokenId);
+        safeTransferFrom(msg.sender, address(0), tokenId);
     }
 }
