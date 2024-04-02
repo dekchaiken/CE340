@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Car Share</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/web3/dist/web3.min.js"></script>
+    <script src="node_modules/@truffle/contract/browser-dist/truffle-contract.min.js"></script>
+    <link rel="stylesheet" href="./css/04.css">
+    <script src="js/00initWeb3.js"></script>
+    <script src="js/05erc981.js"></script>
+  </head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">Car Share</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Explore</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">My Shares</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container my-5">
+        <section class="item-details row">
+            <div class="col-md-6">
+                <img id="item-image" src="placeholder.jpg" alt="Item Image" class="img-fluid">
+            </div>
+            <div class="col-md-6">
+                <div class="item-info">
+                    <h1 id="item-name">McLaren 720S</h1>
+                    <p id="item-description">SuperCar</p>
+                    <div class="ownership">
+                        <h2>Ownership</h2>
+                        <ul id="ownership-list" class="list-unstyled">
+                            <!-- Ownership shares will be dynamically added here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="share-form">
+          <h2>Share Ownership</h2>
+          <form onsubmit="shareOwnership()">
+              <div class="mb-3">
+                  <label for="token-id" class="form-label">Token ID:</label>
+                  <input type="number" class="form-control" id="token-id" placeholder="Enter token ID">
+              </div>
+              <div class="mb-3">
+                  <label for="new-owners" class="form-label">New Owners Address (comma-separated):</label>
+                  <input type="text" class="form-control" id="new-owners" placeholder="Enter new owners address">
+              </div>
+              <div class="mb-3">
+                  <label for="new-shares" class="form-label">New Shares (comma-separated):</label>
+                  <input type="text" class="form-control" id="new-shares" placeholder="Enter new shares">
+              </div>
+              <button type="submit" class="btn btn-primary">Share Ownership</button>
+              <button onclick="displayOwnershipData(tokenId)" class="btn btn-primary" >Show Ownership</button>
+          </form>
+      </section>
+    </main>
+
+    <footer class="bg-dark text-white py-3">
+        <div class="container">
+            <p>&copy; 2023 Ownership Sharing Platform</p>
+        </div>
+    </footer>
+</body>
+</html>

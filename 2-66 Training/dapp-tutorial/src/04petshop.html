@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Pet Shop</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+    <script src="./node_modules/bignumber.js/bignumber.js"></script>
+    <script src="./node_modules/@truffle/contract/browser-dist/truffle-contract.min.js"></script>
+    <script src="js/00initWeb3.js"></script>
+    <script src="js/04setup-petshop.js"></script>
+    <script src="js/04petshop.js"></script>
+  
+  </head>
+  <body>
+      <div class="container-fluid">
+        <div class="row">
+          <!-- <div class="col-xs-12 col-sm-8 col-sm-push-2"> -->
+          <div class="w-100 text-center">
+            <h1>Pete's Pet Shop</h1>
+            <p><em>Shop Owner: </em><span id="shop-owner"></span></p>
+            <p><em>Balance: </em><span id="balance"></span>&nbsp;Ether&nbsp;
+            <button id="withdraw" type="button" class="btn btn-sm btn-info">Withdraw</button></p>
+            <hr/>
+            <br/>
+          </div>
+        </div>
+
+        <div id="petsRow" class="row">
+          <!-- PETS LOAD HERE -->
+        </div>
+      </div>
+
+      <div id="petTemplate" style="display: none;">
+        <div class="col-sm-6 col-md-4 col-lg-3 mt-2 mb-2">
+          <div class="card card-pet">
+            <div class="card-header">
+              <h3 class="card-title">Scrappy</h3>
+            </div>
+            <div class="card-body">
+              <img alt="140x140"
+                class="card-img-top rounded mx-auto img-thumbnail"
+                style="width: 100%;" src="assets/images/140x140.png"
+                data-holder-rendered="true">
+              <br/>
+              <strong>Breed</strong>: <span class="pet-breed">Golden Retriever</span><br/>
+              <strong>Age</strong>: <span class="pet-age">3</span><br/>
+              <strong>Location</strong>: <span class="pet-location">Warren, MI</span><br/>
+              <strong>Price</strong>: <span class="pet-price">1.0</span>&nbsp;Ether<br/><br/>
+              <button class="btn btn-primary btn-buy" type="button" data-id="0">Buy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  </body>
+</html>

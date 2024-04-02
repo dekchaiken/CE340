@@ -1,5 +1,5 @@
-const ERC721PartialOwnership = artifacts.require('ERC721PartialOwnership');
+const ERC981Token = artifacts.require("ERC981Token");
 
 module.exports = function (deployer) {
-  deployer.deploy(ERC721PartialOwnership, "TestToken", "TT");
+  deployer.deploy(ERC981Token, "ERC981 Token", "ERC981");
 };

@@ -18,6 +18,7 @@ contract("ERC721PartialOwnership", (accounts) => {
       ], // ใส่ที่อยู่ของผู้ถือสิทธิ์เป็นตัวอย่าง
       [70, 30] // ใส่สิทธิ์ของแต่ละผู้ถือสิทธิ์เป็นตัวอย่าง
     );
+    console.log("Token ID: ", tokenId);
     assert.exists(tokenId, "Token ID should exist");
   });
 });
