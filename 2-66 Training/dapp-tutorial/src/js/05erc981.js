@@ -5,7 +5,6 @@ let initialized = false;
 
 const deployContract = async () => {
   $.getJSON(MY_ERC981_CONTRACT_ABI, async (contractABI) => {
-    // ปรับให้โหลด ABI ของ Smart Contract ERC981Token
     try {
       const contract = TruffleContract(contractABI);
       contract.setProvider(web3.currentProvider);
@@ -13,8 +12,8 @@ const deployContract = async () => {
       console.log(erc981Token);
 
       // ดึงข้อมูลเจ้าของและสัดส่วนการถือครอง
-      const owners = await erc981Token.getOwners();
-      const shares = await erc981Token.getShares();
+      const owners = await erc981Token.methods.getOwners().call();
+      const shares = await erc981Token.methods.getShares().call();
 
       // แสดงผลบนเว็บไซต์
       const ownershipList = document.getElementById("ownership-list");
@@ -24,6 +23,11 @@ const deployContract = async () => {
         ownerItem.textContent = `${owners[i]}: ${shares[i]}%`;
         ownershipList.appendChild(ownerItem);
       }
+
+      // เรียกใช้ฟังก์ชัน displayOwnershipData ตรงนี้
+      const tokenId = 1; // ตัวอย่างการแสดงข้อมูลสำหรับ Token ID 1
+  await displayOwnershipData(tokenId);
+  await displayItemInfo(tokenId);
     } catch (error) {
       console.log(error);
     }
@@ -31,17 +35,73 @@ const deployContract = async () => {
 };
 
 $(async () => {
-  // ทำงานเมื่อเว็บโหลดเสร็จ
   try {
     await initWeb3();
+    await getAccounts();
+    currentAccount = getCurrentAccount();
     await deployContract();
-    
+    const tokenId = 1; // ตัวอย่างการแสดงข้อมูลสำหรับ Token ID 1
+    await displayOwnershipData(tokenId);
   } catch (error) {
     console.log(error);
   }
-  console.log("Accounts:", accounts);
-  console.log("Balances:", balances);
 });
+
+const displayOwnershipData = async (tokenId) => {
+  try {
+    const ownershipData = await erc981Token.methods.ownershipOf(tokenId).call();
+    const owners = ownershipData[0];
+    const shares = ownershipData[1];
+
+    const ownershipList = document.getElementById("ownership-list");
+    ownershipList.innerHTML = "";
+
+    for (let i = 0; i < owners.length; i++) {
+      const ownerItem = document.createElement("li");
+      ownerItem.textContent = `${owners[i]}: ${shares[i]}%`;
+      ownershipList.appendChild(ownerItem);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const shareOwnership = async () => {
+  const tokenId = document.getElementById("token-id").value;
+  const newOwnersInput = document.getElementById("new-owners").value;
+  const newSharesInput = document.getElementById("new-shares").value;
+
+  const newOwners = newOwnersInput.split(",").map((owner) => owner.trim());
+  const newShares = newSharesInput.split(",").map((share) => parseInt(share.trim()));
+
+  try {
+    await erc981Token.methods.shareOwnership(tokenId, newOwners, newShares).send({ from: currentAccount });
+    alert("Ownership shared successfully!");
+  } catch (error) {
+    console.log(error);
+    alert("Error sharing ownership.");
+  }
+};
+
+const displayItemInfo = async (tokenId) => {
+  try {
+    const ownershipData = await erc981Token.methods.ownershipOf(tokenId).call();
+    const owners = ownershipData[0];
+    const shares = ownershipData[1];
+
+    const itemName = document.getElementById("item-name");
+    const itemDescription = document.getElementById("item-description");
+
+    // แสดงชื่อเจ้าของรถ
+    const ownersString = owners.join(", ");
+    itemName.textContent = `${ownersString}'s McLaren 720S`;
+
+    // แสดงคำอธิบายรถ
+    itemDescription.textContent = "SuperCar with multiple owners";
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // const getAccounts = async () => {
 //     accounts = await web3.eth.getAccounts();    // ดึงข้อมูล account ทั้งหมด

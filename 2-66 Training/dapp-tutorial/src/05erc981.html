@@ -51,9 +51,9 @@
                     <div class="ownership">
                         <h2>Ownership</h2>
                         <ul id="ownership-list" class="list-unstyled">
-                            <!-- Ownership shares will be dynamically added here -->
+                          <!-- Ownership shares will be dynamically added here -->
                         </ul>
-                    </div>
+                      </div>
                 </div>
             </div>
         </section>
@@ -73,7 +73,7 @@
                   <label for="new-shares" class="form-label">New Shares (comma-separated):</label>
                   <input type="text" class="form-control" id="new-shares" placeholder="Enter new shares">
               </div>
-              <button type="submit" class="btn btn-primary">Share Ownership</button>
+              <button type="button" onclick="shareOwnership()" class="btn btn-primary" >Share Ownership</button>
               <button onclick="displayOwnershipData(tokenId)" class="btn btn-primary" >Show Ownership</button>
           </form>
       </section>
