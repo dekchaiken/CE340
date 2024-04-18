@@ -1,0 +1,22 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+.asset, .ownership {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.asset h3, .ownership h3 {
+  margin-top: 0;
+}
+
+.asset p, .ownership p {
+  margin-bottom: 0.5rem;
+}
+
+.btn-buy {
+  margin-top: 1rem;
+}
